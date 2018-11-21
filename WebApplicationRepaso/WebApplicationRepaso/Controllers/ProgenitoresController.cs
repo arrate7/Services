@@ -5,26 +5,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ManyToMany.Models;
+using WebApplicationRepaso.Data;
+using WebApplicationRepaso.Models;
 
-namespace ManyToMany.Controllers
+namespace WebApplicationRepaso.Controllers
 {
-    public class StudentsController : Controller
+    public class ProgenitoresController : Controller
     {
-        private readonly ManyToManyContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public StudentsController(ManyToManyContext context)
+        public ProgenitoresController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Students
+        // GET: Progenitores
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Student.Include(_).ToListAsync());
+            return View(await _context.Progenitor.Include(x => x.Descendientes).ToListAsync());
         }
 
-        // GET: Students/Details/5
+        // GET: Progenitores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +33,39 @@ namespace ManyToMany.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student
+            var progenitor = await _context.Progenitor
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (progenitor == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(progenitor);
         }
 
-        // GET: Students/Create
+        // GET: Progenitores/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
+        // POST: Progenitores/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Student student)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Sexo,Edad")] Progenitor progenitor)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
+                _context.Add(progenitor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(progenitor);
         }
 
-        // GET: Students/Edit/5
+        // GET: Progenitores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +73,22 @@ namespace ManyToMany.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student.FindAsync(id);
-            if (student == null)
+            var progenitor = await _context.Progenitor.FindAsync(id);
+            if (progenitor == null)
             {
                 return NotFound();
             }
-            return View(student);
+            return View(progenitor);
         }
 
-        // POST: Students/Edit/5
+        // POST: Progenitores/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Sexo,Edad")] Progenitor progenitor)
         {
-            if (id != student.Id)
+            if (id != progenitor.Id)
             {
                 return NotFound();
             }
@@ -96,12 +97,12 @@ namespace ManyToMany.Controllers
             {
                 try
                 {
-                    _context.Update(student);
+                    _context.Update(progenitor);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.Id))
+                    if (!ProgenitorExists(progenitor.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +113,10 @@ namespace ManyToMany.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(progenitor);
         }
 
-        // GET: Students/Delete/5
+        // GET: Progenitores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +124,30 @@ namespace ManyToMany.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student
+            var progenitor = await _context.Progenitor
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (progenitor == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(progenitor);
         }
 
-        // POST: Students/Delete/5
+        // POST: Progenitores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.Student.FindAsync(id);
-            _context.Student.Remove(student);
+            var progenitor = await _context.Progenitor.FindAsync(id);
+            _context.Progenitor.Remove(progenitor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentExists(int id)
+        private bool ProgenitorExists(int id)
         {
-            return _context.Student.Any(e => e.Id == id);
+            return _context.Progenitor.Any(e => e.Id == id);
         }
     }
 }
