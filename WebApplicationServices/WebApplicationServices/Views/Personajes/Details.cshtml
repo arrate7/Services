@@ -1,0 +1,73 @@
+﻿@model WebApplicationServices.Models.Personaje
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Personaje</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Heigth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Heigth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mass)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mass)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Hair_color)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Hair_color)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Skin_color)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Skin_color)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Eye_color)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Eye_color)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Birth_year)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Birth_year)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Homeworld)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Homeworld)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

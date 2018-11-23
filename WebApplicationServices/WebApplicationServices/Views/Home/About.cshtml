@@ -1,0 +1,17 @@
+﻿@inject WebApplicationServices.Services.SWServices SWServices
+
+@{
+    ViewData["Title"] = "About";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+@{ 
+    List<Personaje> personajes =await SWServices.GetPersonajesApi();
+    <ul>
+        @foreach (Personaje personaje in personajes)
+        {
+            <li>@personaje.Name</li>
+        }
+    </ul>
+}
