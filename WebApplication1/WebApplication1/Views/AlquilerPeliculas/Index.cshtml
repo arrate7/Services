@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebApplication1.Models.AlquilerPeliculas>
+@inject WebApplication1.Services.VideoclubServices VideoClubServices
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Pelicula> peliculas = await VideoClubServices.GetPeliculas();
+}
+
+
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
+
+<h2>Películas alquiladas</h2>
+<table class="table">
+    <thead>
+        <th>
+            Usuario
+        </th>
+        <th>
+            Título
+        </th>
+        <th>
+            Fecha Alquiler
+        </th>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <p>@User.Identity.Name</p>
+                </td>
+                <td>
+
+                    @item.Pelicula.Titulo
+
+
+                </td>
+                <td>
+
+                    @item.Alquiler.Fecha
+
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
